@@ -1,14 +1,15 @@
 {
   "version": "1.0",
   "ai": {
-    "provider": "openai",
-    "model": "gpt-4",
-    "api_key_env": "OPENAI_API_KEY",
+    "provider": "deepseek",
+    "model": "deepseek-chat",
+    "api_key_env": "DEEPSEEK_API_KEY",
     "temperature": 0.3,
-    "max_tokens": 4096,
-    "throttle_sec": 0,
+    "max_tokens": 8192,
+    "throttle_sec": 1.0,
     "analysis_concurrency": 1,
-    "enrichment_concurrency": 1
+    "enrichment_concurrency": 1,
+    "languages": ["zh"]
   },
   "email": {
     "enabled": false,
@@ -24,61 +25,133 @@
   "sources": {
     "github": [
       {
-        "type": "user_events",
-        "username": "torvalds",
+        "type": "repo_releases",
+        "owner": "obsidianmd",
+        "repo": "obsidian-releases",
         "enabled": true
       },
       {
         "type": "repo_releases",
-        "owner": "astral-sh",
-        "repo": "uv",
+        "owner": "continuedev",
+        "repo": "continue",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "open-webui",
+        "repo": "open-webui",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "langchain-ai",
+        "repo": "langchain",
+        "enabled": true
+      },
+      {
+        "type": "repo_releases",
+        "owner": "SillyTavern",
+        "repo": "SillyTavern",
         "enabled": true
       }
     ],
     "hackernews": {
       "enabled": true,
-      "fetch_top_stories": 20,
-      "min_score": 100
+      "fetch_top_stories": 30,
+      "min_score": 120
     },
     "rss": [
       {
         "name": "Simon Willison",
         "url": "https://simonwillison.net/atom/everything/",
         "enabled": true,
-        "category": "ai-tools"
+        "category": "llm-agent-rag"
       },
       {
-        "name": "LWN.net (subscriber full-text)",
-        "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
-        "enabled": false,
-        "category": "linux"
+        "name": "Hugging Face Blog",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "enabled": true,
+        "category": "llm-tools"
+      },
+      {
+        "name": "Google AI Blog",
+        "url": "https://blog.google/technology/ai/rss/",
+        "enabled": true,
+        "category": "ai-industry"
+      },
+      {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/category/ai/feed/",
+        "enabled": true,
+        "category": "ai-industry"
+      },
+      {
+        "name": "The Decoder",
+        "url": "https://the-decoder.com/feed/",
+        "enabled": true,
+        "category": "ai-industry"
+      },
+      {
+        "name": "Publishing Perspectives",
+        "url": "https://publishingperspectives.com/feed/",
+        "enabled": true,
+        "category": "publishing-ip"
+      },
+      {
+        "name": "Jane Friedman",
+        "url": "https://janefriedman.com/feed/",
+        "enabled": true,
+        "category": "writing-publishing"
+      },
+      {
+        "name": "The Creative Penn",
+        "url": "https://www.thecreativepenn.com/feed/",
+        "enabled": true,
+        "category": "writing-business"
       }
     ],
     "reddit": {
       "enabled": true,
       "subreddits": [
         {
-          "subreddit": "MachineLearning",
+          "subreddit": "ChatGPT",
           "enabled": true,
           "sort": "hot",
           "time_filter": "day",
-          "fetch_limit": 15,
+          "fetch_limit": 10,
+          "min_score": 80
+        },
+        {
+          "subreddit": "LocalLLaMA",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 80
+        },
+        {
+          "subreddit": "selfpublish",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 30
+        },
+        {
+          "subreddit": "writing",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
           "min_score": 50
         }
       ],
-      "users": [
-        {
-          "username": "iamthatis",
-          "enabled": true,
-          "sort": "new",
-          "fetch_limit": 10
-        }
-      ],
-      "fetch_comments": 5
+      "users": [],
+      "fetch_comments": 3
     },
     "twitter": {
       "enabled": false,
-      "users": ["karpathy", "ylecun"],
+      "users": [],
       "fetch_limit": 10,
       "fetch_reply_text": false,
       "max_replies_per_tweet": 3,
@@ -89,39 +162,30 @@
       "enabled": false,
       "fetch_filings": false,
       "filings_provider": "sec",
-      "watchlists": [
-        {
-          "name": "megacaps",
-          "enabled": true,
-          "provider": "yfinance",
-          "fetch_limit": 20,
-          "category": "equities",
-          "symbols": ["AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA"]
-        }
-      ]
+      "watchlists": []
     },
     "ossinsight": {
-      "enabled": false,
+      "enabled": true,
       "period": "past_24_hours",
       "languages": ["All", "Python", "TypeScript"],
-      "keywords": [],
-      "min_stars": 10,
+      "keywords": ["writing", "novel", "story", "llm", "agent", "prompt", "obsidian", "rag"],
+      "min_stars": 20,
       "max_items": 30
     }
   },
   "filtering": {
-    "ai_score_threshold": 6.0,
+    "ai_score_threshold": 7.0,
     "time_window_hours": 24
   },
   "webhook": {
-    "enabled": false,
+    "enabled": true,
     "url_env": "HORIZON_WEBHOOK_URL",
     "delivery": "summary",
     "overview_position": "first",
-    "platform": "generic",
-    "layout": "markdown",
+    "platform": "feishu",
+    "layout": "collapsible",
     "fallback_layout": "markdown",
-    "languages": null,
+    "languages": ["zh"],
     "request_body": {
       "msg_type": "interactive",
       "card": {
@@ -140,7 +204,7 @@
           "elements": [
             {
               "tag": "markdown",
-              "content": "Horizon生成结果: #{result}\nHorizon日报重要资讯数量: #{important_items}/#{all_items}"
+              "content": "Horizon generated: #{result}\nImportant items: #{important_items}/#{all_items}"
             },
             {
               "tag": "hr"
